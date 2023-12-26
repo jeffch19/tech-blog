@@ -1,4 +1,4 @@
-// userController.js
+// controllers/userController.js
 
 const bcrypt = require('bcrypt');
 const passport = require('passport');
@@ -9,6 +9,11 @@ const renderSignUp = (req, res) => {
 };
 
 const renderSignIn = (req, res) => {
+  // If the user is already authenticated, redirect to the dashboard
+  if (req.isAuthenticated()) {
+    return res.redirect('/dashboard');
+  }
+
   res.render('signin');
 };
 
