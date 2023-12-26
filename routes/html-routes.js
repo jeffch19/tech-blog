@@ -1,12 +1,15 @@
+// html-routes.js
+
 const express = require('express');
 const router = express.Router();
-const { ensureAuthenticated } = require('../middleware'); // Import your authentication middleware if available
+const { ensureAuthenticated } = require('../middleware');
 const homeController = require('../controllers/homeController');
+const userController = require('../controllers/userController');
 
 // Homepage route
 router.get('/', ensureAuthenticated, homeController.renderHomepage);
 
-// Dashboard route (Assuming you have a dashboardController)
+// Dashboard route
 router.get('/dashboard', ensureAuthenticated, dashboardController.renderDashboard);
 
 // Sign-up route
