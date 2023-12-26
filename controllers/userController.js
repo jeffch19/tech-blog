@@ -1,10 +1,15 @@
 // userController.js
 
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 const db = require('../models');
 
 const renderSignUp = (req, res) => {
   res.render('signup');
+};
+
+const renderSignIn = (req, res) => {
+  res.render('signin');
 };
 
 const handleSignUp = async (req, res) => {
@@ -28,7 +33,14 @@ const handleSignUp = async (req, res) => {
   }
 };
 
+const handleSignIn = passport.authenticate('local', {
+  successRedirect: '/', // Redirect to the homepage after successful sign-in
+  failureRedirect: '/signin', // Redirect to the sign-in page if authentication fails
+});
+
 module.exports = {
   renderSignUp,
+  renderSignIn,
   handleSignUp,
+  handleSignIn,
 };
