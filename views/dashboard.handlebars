@@ -4,11 +4,15 @@
 
 <h2>Your Dashboard</h2>
 
-{{#each userPosts}}
-  <div class="user-post">
-    <h3>{{title}}</h3>
-    <p>{{content}}</p>
-    <p>Date: {{createdAt}}</p>
-    <!-- Add more details or formatting as needed -->
-  </div>
-{{/each}}
+{{#if userBlogPosts.length}}
+  {{#each userBlogPosts}}
+    <div class="blog-post">
+      <h3>{{title}}</h3>
+      <p>{{createdAt}}</p>
+      <p>{{content}}</p>
+      <a href="/post/{{id}}">Read more</a>
+    </div>
+  {{/each}}
+{{else}}
+  <p>You haven't created any blog posts yet. <a href="/post/new">Create one now</a>!</p>
+{{/if}}

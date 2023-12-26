@@ -1,16 +1,19 @@
+// controllers/dashboardController.js
+
 const db = require('../models');
 
 const renderDashboard = async (req, res) => {
   try {
-    // Fetch user-specific blog posts from the database
-    const userPosts = await db.Post.findAll({
-      where: { UserId: req.user.id }, // Assuming your user is stored in req.user after authentication
+    // Fetch blog posts created by the logged-in user
+    const userBlogPosts = await db.Post.findAll({
+      where: { UserId: req.user.id },
+      order: [['createdAt', 'DESC']],
     });
 
-    // Pass the data to the dashboard.handlebars template for rendering
-    res.render('dashboard', { userPosts });
+    // Render the dashboard with the user's blog posts
+    res.render('dashboard', { userBlogPosts });
   } catch (error) {
-    console.error('Error fetching user posts:', error);
+    console.error('Error fetching user blog posts:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

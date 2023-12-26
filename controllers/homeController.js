@@ -1,18 +1,16 @@
+// controllers/homeController.js
+
 const db = require('../models');
 
 const renderHomepage = async (req, res) => {
   try {
     // Fetch existing blog posts from the database
     const blogPosts = await db.Post.findAll({
-      include: [
-        {
-          model: db.User,
-          attributes: ['username'], // Include the username of the post creator
-        },
-      ],
+      include: [{ model: db.User, attributes: ['username'] }],
+      order: [['createdAt', 'DESC']],
     });
 
-    // Pass the data to the home.handlebars template for rendering
+    // Render the homepage with blog post data
     res.render('home', { blogPosts });
   } catch (error) {
     console.error('Error fetching blog posts:', error);
