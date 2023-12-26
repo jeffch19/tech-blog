@@ -21,7 +21,7 @@ router.use('/post', postRoutes);
 // Route to update a blog post
 router.post('/update/:id', ensureAuthenticated, postController.updatePost);
 
-// Route to delete a blog post
+// Route to delete a blog post 
 router.post('/delete/:id', ensureAuthenticated, postController.deletePost);
 
 module.exports = router;
