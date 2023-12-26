@@ -1,0 +1,12 @@
+<!-- views/home.handlebars -->
+
+{{> layouts/main}}
+
+{{#each blogPosts}}
+  <div class="blog-post">
+    <h2>{{title}}</h2>
+    <p>{{content}}</p>
+    <p>Created by: {{User.username}}</p>
+    <p>Date: {{createdAt}}</p>
+  </div>
+{{/each}}
