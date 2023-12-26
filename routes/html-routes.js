@@ -1,10 +1,11 @@
-// html-routes.js
+// routes/html-routes.js
 
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../middleware');
 const homeController = require('../controllers/homeController');
 const userController = require('../controllers/userController');
+const postController = require('../controllers/postController');
 
 // Homepage route
 router.get('/', ensureAuthenticated, homeController.renderHomepage);
@@ -17,5 +18,8 @@ router.get('/signup', userController.renderSignUp);
 
 // Sign-in route
 router.get('/signin', userController.renderSignIn);
+
+// Single blog post route
+router.get('/post/:id', ensureAuthenticated, postController.renderSinglePost);
 
 module.exports = router;
