@@ -1,0 +1,14 @@
+<!-- views/dashboard.handlebars -->
+
+{{> layouts/main}}
+
+<h2>Your Dashboard</h2>
+
+{{#each userPosts}}
+  <div class="user-post">
+    <h3>{{title}}</h3>
+    <p>{{content}}</p>
+    <p>Date: {{createdAt}}</p>
+    <!-- Add more details or formatting as needed -->
+  </div>
+{{/each}}
