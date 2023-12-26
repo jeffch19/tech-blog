@@ -19,8 +19,8 @@
   <p>No comments yet.</p>
 {{/if}}
 
-{{!-- Add a form for adding comments (optional) --}}
-<form action="/comment/{{singlePost.id}}" method="post">
+{{!-- Add a form for adding comments --}}
+<form action="/api/comment/{{singlePost.id}}" method="post">
   <label for="comment">Add a Comment:</label>
   <textarea id="comment" name="comment" rows="4" required></textarea>
   <button type="submit">Submit</button>
