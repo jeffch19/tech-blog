@@ -22,4 +22,7 @@ router.get('/signin', userController.renderSignIn);
 // Single blog post route
 router.get('/post/:id', ensureAuthenticated, postController.renderSinglePost);
 
+// New blog post route
+router.get('/post/new', ensureAuthenticated, postController.renderNewPost);
+
 module.exports = router;
