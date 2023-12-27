@@ -1,51 +1,56 @@
 // controllers/userController.js
 
-const bcrypt = require('bcrypt');
 const passport = require('passport');
 const db = require('../models');
+const bcrypt = require('bcrypt');
 
 const renderSignUp = (req, res) => {
   res.render('signup');
 };
 
 const renderSignIn = (req, res) => {
-  // If the user is already authenticated, redirect to the dashboard
-  if (req.isAuthenticated()) {
-    return res.redirect('/dashboard');
-  }
-
   res.render('signin');
 };
 
-const handleSignUp = async (req, res) => {
+const signup = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Hash the password using bcrypt
+    // Hash the password before saving it to the database
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create a new user in the database
-    const newUser = await db.User.create({
+    await db.User.create({
       username,
       password: hashedPassword,
     });
 
-    // Redirect to the homepage or any other desired page after successful sign-up
-    res.redirect('/');
+    // Redirect to the login page after successful signup
+    res.redirect('/signin');
   } catch (error) {
-    console.error('Error creating user:', error);
+    console.error('Error during signup:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-const handleSignIn = passport.authenticate('local', {
-  successRedirect: '/', // Redirect to the homepage after successful sign-in
-  failureRedirect: '/signin', // Redirect to the sign-in page if authentication fails
+const signin = passport.authenticate('local', {
+  successRedirect: '/dashboard',
+  failureRedirect: '/signin',
+  failureFlash: true,
 });
+
+const logout = (req, res) => {
+  // Passport.js provides a logout() method on the request object
+  req.logout();
+
+  // Redirect the user to the homepage after logout
+  res.redirect('/');
+};
 
 module.exports = {
   renderSignUp,
   renderSignIn,
-  handleSignUp,
-  handleSignIn,
+  signup,
+  signin,
+  logout,
 };

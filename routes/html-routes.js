@@ -25,4 +25,7 @@ router.get('/post/:id', ensureAuthenticated, postController.renderSinglePost);
 // New blog post route
 router.get('/post/new', ensureAuthenticated, postController.renderNewPost);
 
+// Logout route
+router.get('/logout', userController.logout);
+
 module.exports = router;
