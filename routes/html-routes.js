@@ -1,5 +1,3 @@
-// routes/html-routes.js
-
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../middleware');
@@ -11,7 +9,7 @@ const postController = require('../controllers/postController');
 router.get('/', ensureAuthenticated, homeController.renderHomepage);
 
 // Dashboard route
-router.get('/dashboard', ensureAuthenticated, dashboardController.renderDashboard);
+router.get('/dashboard', ensureAuthenticated, /* Include the correct controller here */ renderDashboard);
 
 // Sign-up route
 router.get('/signup', userController.renderSignUp);
