@@ -9,7 +9,7 @@ const renderSignIn = (req, res) => {
   res.render('signin');
 };
 
-const signup = async (req, res) => {
+const handleSignUp = async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -33,7 +33,7 @@ const signup = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const handleSignIn = async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -82,7 +82,7 @@ const logout = (req, res) => {
 module.exports = {
   renderSignUp,
   renderSignIn,
-  signup,
-  login,
+  handleSignUp,  
+  handleSignIn,
   logout,
 };

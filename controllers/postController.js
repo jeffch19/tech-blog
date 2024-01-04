@@ -1,3 +1,5 @@
+// controllers/postController.js
+
 const db = require('../models');
 
 const renderSinglePost = async (req, res) => {
@@ -75,6 +77,29 @@ const renderDeletePost = async (req, res) => {
   }
 };
 
+const renderDashboard = async (req, res) => {
+  try {
+    // Assuming you have a User model with a posts association
+    const user = await db.User.findByPk(req.user.id, {
+      include: {
+        model: db.Post,
+        order: [['createdAt', 'DESC']], // Order posts by creation date, newest first
+      },
+    });
+
+    if (user) {
+      // Render the dashboard view and pass user and user's posts to the view
+      res.render('dashboard', { user });
+    } else {
+      // Handle case where user is not found
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error rendering dashboard:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 const deletePost = async (req, res) => {
   try {
     await db.Post.destroy({ where: { id: req.params.id, UserId: req.user.id } });
@@ -92,5 +117,6 @@ module.exports = {
   renderUpdatePost,
   updatePost,
   renderDeletePost,
+  renderDashboard,
   deletePost,
 };
