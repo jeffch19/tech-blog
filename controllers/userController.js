@@ -29,7 +29,6 @@ const handleSignUp = async (req, res) => {
 
     // Render the error page or provide a flash message to the user
     res.status(500).render('error', { error: 'Internal Server Error' });
-    // or res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
@@ -45,44 +44,44 @@ const handleSignIn = async (req, res) => {
       const isPasswordMatch = await bcrypt.compare(password, user.password);
 
       if (isPasswordMatch) {
-        // Successfully logged in, set user information in the session
+        // Successfully logged in, set user information in the session (optional)
         req.session.user = {
           id: user.id,
           username: user.username,
         };
 
+        // Redirect to the dashboard or any other authenticated route
         res.redirect('/dashboard');
       } else {
         // Passwords do not match
         // Render the error page or provide a flash message to the user
         res.render('error', { error: 'Incorrect username or password' });
-        // or res.redirect('/signin?error=Incorrect username or password');
       }
     } else {
       // User not found
       // Render the error page or provide a flash message to the user
       res.render('error', { error: 'User not found' });
-      // or res.redirect('/signin?error=User not found');
     }
   } catch (error) {
     console.error('Error during login:', error);
 
     // Render the error page or provide a flash message to the user
     res.status(500).render('error', { error: 'Internal Server Error' });
-    // or res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 const logout = (req, res) => {
-  // Clear user information from the session
+  // Clear user information from the session (optional)
   req.session.user = null;
+
+  // Redirect to the home page or any other route
   res.redirect('/');
 };
 
 module.exports = {
   renderSignUp,
   renderSignIn,
-  handleSignUp,  
+  handleSignUp,
   handleSignIn,
   logout,
 };

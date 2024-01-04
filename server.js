@@ -1,7 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
-const db = require('./models'); // Adjust the path as needed
+const exphbs = require('express-handlebars'); // Add this line
+const path = require('path');
+const db = require('./models');
 const htmlRoutes = require('./routes/html-routes');
 const userRoutes = require('./routes/user-routes');
 
@@ -19,6 +21,13 @@ app.use(
 // Initialize bcrypt
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Set up Handlebars as the view engine
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+
+// Set the views directory
+app.set('views', path.join(__dirname, 'views'));
 
 // Use bcrypt for user authentication
 app.post('/user/signin', async (req, res) => {
