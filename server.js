@@ -1,8 +1,9 @@
-// server.js
-
 const express = require('express');
-const passport = require('passport');
 const session = require('express-session');
+const bcrypt = require('bcrypt');
+const db = require('./models'); // Adjust the path as needed
+const htmlRoutes = require('./routes/html-routes');
+const userRoutes = require('./routes/user-routes');
 
 const app = express();
 
@@ -15,23 +16,51 @@ app.use(
   })
 );
 
-// Initialize Passport.js
-app.use(passport.initialize());
-app.use(passport.session());
+// Initialize bcrypt
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Include passport-config.js file
-require('./config/passport-config');
+// Use bcrypt for user authentication
+app.post('/user/signin', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Find the user in the database using Sequelize
+    const user = await db.User.findOne({
+      where: { username },
+    });
+
+    if (user) {
+      // Compare the entered password with the hashed password stored in the database
+      const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+      if (isPasswordMatch) {
+        // Successfully logged in, set user information in the session
+        req.session.user = {
+          id: user.id,
+          username: user.username,
+        };
+
+        res.redirect('/dashboard');
+      } else {
+        // Passwords do not match
+        res.redirect('/signin');
+      }
+    } else {
+      // User not found
+      res.redirect('/signin');
+    }
+  } catch (error) {
+    console.error('Error finding user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 // Include routes
-const htmlRoutes = require('./routes/html-routes');
-const userRoutes = require('./routes/user-routes');
-
 app.use('/', htmlRoutes);
-app.use('/user', userRoutes); // Adjust the base path if needed
+app.use('/user', userRoutes);
 
-
-
-// Start  server
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

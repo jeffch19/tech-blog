@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { ensureAuthenticated } = require('../../middleware/auth');
+const { ensureAuthenticated } = require('../../middleware');
 const commentRoutes = require('./comment-routes');
 const postRoutes = require('./post-routes');
 const postController = require('../../controllers/postController');

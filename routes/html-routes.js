@@ -9,7 +9,7 @@ const postController = require('../controllers/postController');
 router.get('/', ensureAuthenticated, homeController.renderHomepage);
 
 // Dashboard route
-router.get('/dashboard', ensureAuthenticated, /* Include the correct controller here */ renderDashboard);
+router.get('/dashboard', ensureAuthenticated, homeController.renderDashboard);
 
 // Sign-up route
 router.get('/signup', userController.renderSignUp);

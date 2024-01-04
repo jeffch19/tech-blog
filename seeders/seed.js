@@ -1,6 +1,6 @@
 // seed.js
 
-const db = require('./models'); // Adjust the path based on your project structure
+const db = require('./models'); 
 const bcrypt = require('bcrypt');
 
 const seedDatabase = async () => {
@@ -15,7 +15,7 @@ const seedDatabase = async () => {
     await db.Post.create({
       title: 'Sample Post 1',
       content: 'This is the content of Sample Post 1.',
-      UserId: 1, // Use the ID of the user you created
+      UserId: 1, 
     });
 
     await db.Post.create({

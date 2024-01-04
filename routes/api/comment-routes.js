@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { ensureAuthenticated } = require('../../middleware/auth');
+const { ensureAuthenticated } = require('../../middleware');
 const commentController = require('../../controllers/commentController');
 
 // Route to add a comment
