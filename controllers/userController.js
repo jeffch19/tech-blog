@@ -26,7 +26,10 @@ const signup = async (req, res) => {
     res.redirect('/signin');
   } catch (error) {
     console.error('Error during signup:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+
+    // Render the error page or provide a flash message to the user
+    res.status(500).render('error', { error: 'Internal Server Error' });
+    // or res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
@@ -42,8 +45,7 @@ const login = async (req, res) => {
       const isPasswordMatch = await bcrypt.compare(password, user.password);
 
       if (isPasswordMatch) {
-        // Successfully logged in, do whatever you need
-        // For example, set user information in the session
+        // Successfully logged in, set user information in the session
         req.session.user = {
           id: user.id,
           username: user.username,
@@ -52,15 +54,22 @@ const login = async (req, res) => {
         res.redirect('/dashboard');
       } else {
         // Passwords do not match
-        res.redirect('/signin');
+        // Render the error page or provide a flash message to the user
+        res.render('error', { error: 'Incorrect username or password' });
+        // or res.redirect('/signin?error=Incorrect username or password');
       }
     } else {
       // User not found
-      res.redirect('/signin');
+      // Render the error page or provide a flash message to the user
+      res.render('error', { error: 'User not found' });
+      // or res.redirect('/signin?error=User not found');
     }
   } catch (error) {
     console.error('Error during login:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+
+    // Render the error page or provide a flash message to the user
+    res.status(500).render('error', { error: 'Internal Server Error' });
+    // or res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
