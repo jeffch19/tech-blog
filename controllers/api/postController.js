@@ -1,6 +1,6 @@
 // controllers/postController.js
-
-const db = require('../models');
+const router = require("express").Router()
+const db = require('../../models');
 
 const renderSinglePost = async (req, res) => {
   try {
@@ -110,13 +110,14 @@ const deletePost = async (req, res) => {
   }
 };
 
-module.exports = {
-  renderSinglePost,
-  renderNewPost,
-  createPost,
-  renderUpdatePost,
-  updatePost,
-  renderDeletePost,
-  renderDashboard,
-  deletePost,
-};
+// module.exports = {
+//   renderSinglePost,
+//   renderNewPost,
+//   createPost,
+//   renderUpdatePost,
+//   updatePost,
+//   renderDeletePost,
+//   renderDashboard,
+//   deletePost,
+// };
+module.exports = router

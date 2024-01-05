@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
-const db = require('../models');
-
+const db = require('../../models');
+const router = require("express").Router()
 const renderSignUp = (req, res) => {
   res.render('signup');
 };
@@ -78,10 +78,11 @@ const logout = (req, res) => {
   res.redirect('/');
 };
 
-module.exports = {
-  renderSignUp,
-  renderSignIn,
-  handleSignUp,
-  handleSignIn,
-  logout,
-};
+// module.exports = {
+//   renderSignUp,
+//   renderSignIn,
+//   handleSignUp,
+//   handleSignIn,
+//   logout,
+// };
+module.exports = router

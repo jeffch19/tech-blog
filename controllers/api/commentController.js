@@ -1,6 +1,6 @@
 // controllers/commentController.js
-
-const db = require('../models');
+const router = require("express").Router()
+const db = require('../../models');
 
 const addComment = async (req, res) => {
   try {
@@ -21,6 +21,7 @@ const addComment = async (req, res) => {
   }
 };
 
-module.exports = {
-  addComment,
-};
+// module.exports = {
+//   addComment,
+// };
+module.exports = router
