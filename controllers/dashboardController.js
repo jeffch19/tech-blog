@@ -1,6 +1,7 @@
 // controllers/dashboardController.js
 
 const db = require('../models');
+const router = require("express").Router() 
 
 const renderDashboard = async (req, res) => {
   try {
@@ -18,6 +19,4 @@ const renderDashboard = async (req, res) => {
   }
 };
 
-module.exports = {
-  renderDashboard,
-};
+module.exports = router
