@@ -7,26 +7,27 @@
   <title>Tech Blog</title>
 </head>
 <body>
-
   <header>
     <h1>Tech Blog</h1>
     <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/dashboard">Dashboard</a></li>
-        {{#if user}}
-          <li><a href="/logout">Logout</a></li>
-        {{else}}
-          <li><a href="/signup">Sign Up</a></li>
-          <li><a href="/signin">Sign In</a></li>
-        {{/if}}
-      </ul>
+      {{#if user}}
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Log Out</a>
+      {{else}}
+        <a href="/">Home</a>
+        <a href="/signup">Sign Up</a>
+        <a href="/signin">Sign In</a>
+      {{/if}}
     </nav>
   </header>
 
-  <main>
+  <div class="container">
     {{{body}}}
-  </main>
+  </div>
+
+  <!-- Add your scripts and other body elements here -->
+</body>
 
 </body>
 </html>

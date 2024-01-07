@@ -1,7 +1,7 @@
 // controllers/dashboardController.js
 
 const db = require('../models');
-const router = require("express").Router() 
+// const router = require("express").Router() 
 
 const renderDashboard = async (req, res) => {
   try {
