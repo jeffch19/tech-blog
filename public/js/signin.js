@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Send a POST request to your server with the signin data
-      const response = await fetch('/signin', {
+      const response = await fetch('/api/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

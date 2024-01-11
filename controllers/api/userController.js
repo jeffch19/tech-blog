@@ -21,7 +21,7 @@ const handleSignUp = async (req, res) => {
       username,
       password: hashedPassword,
     });
-
+    console.log('User signed up:', username);
     // Redirect to the login page after successful signup
     res.redirect('/signin');
   } catch (error) {
@@ -49,7 +49,7 @@ const handleSignIn = async (req, res) => {
           id: user.id,
           username: user.username,
         };
-
+        console.log('User logged in:', username);
         // Redirect to the dashboard or any other authenticated route
         res.redirect('/dashboard');
       } else {
@@ -71,7 +71,9 @@ const handleSignIn = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  // Clear user information from the session (optional)
+  // Clear user information from the session 
+  const username = req.session.user ? req.session.user.username : 'Unknown';
+  console.log('User logged out:', username);
   req.session.user = null;
 
   // Redirect to the home page or any other route
