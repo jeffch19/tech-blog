@@ -1,4 +1,6 @@
 // controllers/homeController.js
+const db = require('../models');
+const router = require("express").Router();
 // const router = require("express").Router()
 // router.get("/", async (req, res )=> {
 //   try {
@@ -25,10 +27,10 @@ const renderHomepage = async (req, res) => {
   try {
     // Fetch existing blog posts from the database
     const blogPosts = await db.Post.findAll({
-      include: [{ model: db.User, attributes: ['username'] }],
+      include: [{ model: db.User, as: 'author', attributes: ['username'] }],
       order: [['createdAt', 'DESC']],
     });
- 
+  
     // Render the homepage with blog post data
     res.render('home', { blogPosts });
   } catch (error) {
