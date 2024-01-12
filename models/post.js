@@ -1,6 +1,6 @@
 // models/Post.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const sequelize = require('../config/config');
 
 const Post = sequelize.define('Post', {
   title: {
