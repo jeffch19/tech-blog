@@ -74,7 +74,7 @@ app.use(express.static(path.join(__dirname,"public")))
 // Include routes
 // app.use(routes);
 // app.use('/user', userRoutes);
-app.use(require('./controllers/'))
+app.use(require('./routes/'))
 
 // Start server
 const PORT = process.env.PORT || 3000;
