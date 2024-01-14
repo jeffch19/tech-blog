@@ -33,38 +33,35 @@ const handleSignUp = async (req, res) => {
 const handleSignIn = async (req, res) => {
   try {
     const { username, password } = req.body;
-
     // Find the user by username
     const user = await db.User.findOne({ where: { username } });
-
     if (user) {
       // Compare the entered password with the hashed password stored in the database
       const isPasswordMatch = await bcrypt.compare(password, user.password);
-
+      console.log(isPasswordMatch);
       if (isPasswordMatch) {
         // Successfully logged in, set user information in the session (optional)
         req.session.user = {
           id: user.id,
           username: user.username,
         };
-        console.log('User logged in:', username);
+        console.log("User logged in:", username);
+        res.json(user);
         // Redirect to the dashboard or any other authenticated route
-        res.redirect('/dashboard');
       } else {
         // Passwords do not match
         // Render the error page or provide a flash message to the user
-        res.render('error', { error: 'Incorrect username or password' });
+        res.render("error", { error: "Incorrect username or password" });
       }
     } else {
       // User not found
       // Render the error page or provide a flash message to the user
-      res.render('error', { error: 'User not found' });
+      res.render("error", { error: "User not found" });
     }
   } catch (error) {
-    console.error('Error during login:', error);
-
+    console.error("Error during login:", error);
     // Render the error page or provide a flash message to the user
-    res.status(500).render('error', { error: 'Internal Server Error' });
+    res.status(500).render("error", { error: "Internal Server Error" });
   }
 };
 
