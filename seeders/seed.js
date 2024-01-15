@@ -1,6 +1,6 @@
 // seed.js
 
-const db = require('./models'); 
+const db = require('../models'); 
 const bcrypt = require('bcrypt');
 
 const seedDatabase = async () => {
