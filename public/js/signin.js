@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
  
       if (response.ok) {
         // Redirect to the dashboard page after successful signin
-        document.location.replace('/');
+        document.location.replace('/dashboard');
       } else {
         // Handle errors, e.g., display an error message
         console.error('Error during signin:', response.statusText);

@@ -1,18 +1,23 @@
 <!-- views/dashboard.handlebars -->
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Log Out</a>
+  </div>
 
-<h2>Your Dashboard</h2>
 
-{{#if userBlogPosts.length}}
-  {{#each userBlogPosts}}
-    <div class="blog-post">
-      <h3>{{title}}</h3>
-      <p>{{createdAt}}</p>
-      <p>{{content}}</p>
-      <a href="/post/{{id}}">Read more</a>
-    </div>
-  {{/each}}
-{{else}}
-  <p>You haven't created any blog posts yet. <a href="/post/new">Create one now</a>!</p>
-{{/if}}
+  <main>
+    {{{body}}}
+  </main>
+</body>
+</html>
