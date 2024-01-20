@@ -1,6 +1,8 @@
-const bcrypt = require('bcrypt');
 const db = require('../models');
-const router = require("express").Router()
+
+
+
+
 const renderSignUp = (req, res) => {
   res.render('signup');
 };
@@ -10,23 +12,26 @@ const renderSignUp = (req, res) => {
 const handleSignUp = async (req, res) => {
   try {
     const { username, password } = req.body;
-
- 
-   
-
     // Create a new user in the database
     const newUser = await db.User.create({
       username,
       password
     });
+
+    if (!newUser.id) {
+      throw new Error('User ID not assigned');
+    }
+
     req.session.save(() => {
       req.session.userId = newUser.id;
       req.session.username = newUser.username; 
       req.session.loggedIn = true;
+      res.json({message:  "yo gimmie an id", newUser})
     })
     console.log('User signed up:', username);
     // Redirect to the login page after successful signup
-    res.json(newUser)
+    console.log("user creds", newUser)
+   
   } catch (error) {
     console.error('Error during signup:', error);
 
@@ -50,6 +55,7 @@ const handleSignIn = async (req, res) => {
           req.session.userId = user.id; 
           req.session.username =  user.username;
           req.session.loggedIn = true;
+          console.log("user creds", user)
           res.json({
             user, 
             message: "You are now logged in."
@@ -85,9 +91,37 @@ const logout = (req, res) => {
   }
 };
 
+
+const getAllUsers =  async (req, res) => {
+try {
+  const allUsers = await db.User.findAll()
+  res.json(allUsers)
+} catch (error) {
+  console.error(error)
+  res.status(500).json(error)
+}
+}
+
+const getOneUser = async (req, res) => {
+  try {
+    const dood = await db.User.findOne({
+      where: {
+        id: req.params.id
+      }
+    })
+    console.log(dood)
+    res.status(200).json(dood);
+  } catch (error) {
+    console.error(error)
+  res.status(500).json(error)
+  }
+}
+
 module.exports = {
   renderSignUp,
   handleSignUp,
   handleSignIn,
   logout,
+  getAllUsers,
+  getOneUser,
 };

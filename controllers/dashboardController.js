@@ -6,13 +6,20 @@ const db = require('../models');
 const dashboardView =  async (req, res) => {
   try {
     // Fetch blog posts created by the logged-in user
+    userId = req.session.userId
     const userBlogPosts = await db.Post.findAll({
-      where: { UserId: req.user.id },
-      order: [['createdAt', 'DESC']],
+      where: { 
+       userId
+      },
+      
     });
+   const what = {userId: req.session.userId}
+   console.log(what)
+   console.log( "raw data 8))))))))))))))))))))))))))))))D~~~~", userBlogPosts)
     const posts = userBlogPosts.map((post) => post.get({plain:true}))
     
     // Render the dashboard with the user's blog posts
+    console.log("this is the user posts", posts)
     res.render('profile', { layout: "dashboard", posts });
   } catch (error) {
     console.error('Error fetching user blog posts:', error);
