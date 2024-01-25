@@ -1,10 +1,7 @@
 const { Comment} = require('../models');
 
 const commentData = [
-  {
-    text: 'Shirts',   
-    postId: 4
-  },
+  
   {
     text: 'Shorts',    
     postId: 3

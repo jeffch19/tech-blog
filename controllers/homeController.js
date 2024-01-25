@@ -44,6 +44,7 @@ const renderSignIn = (req, res) => {
 const renderSignUp = (req, res) => {
   res.render("signUp")
 }
+
 module.exports = {
   renderHomepage, renderSignIn, renderSignUp
 };

@@ -1,8 +1,8 @@
 const router = require("express").Router()
-const{dashboardView} = require("../controllers/dashboardController")
+const{dashboardView, homeAdmin, renderfullPost} = require("../controllers/dashboardController")
 router.get("/", dashboardView)
-
-
+router.get("/home-admin", homeAdmin)
+router.get("/fullpostview/:id", renderfullPost)
 
 
 

@@ -4,6 +4,7 @@ const db = require('../models');
 
 
 const dashboardView =  async (req, res) => {
+  
   try {
     // Fetch blog posts created by the logged-in user
     userId = req.session.userId
@@ -15,8 +16,12 @@ const dashboardView =  async (req, res) => {
     });
    const what = {userId: req.session.userId}
    console.log(what)
-   console.log( "raw data 8))))))))))))))))))))))))))))))D~~~~", userBlogPosts)
-    const posts = userBlogPosts.map((post) => post.get({plain:true}))
+   console.log( "raw data", userBlogPosts)
+   let posts = [];
+   if (userBlogPosts.length > 0) {
+     posts = userBlogPosts.map((post) => post.get({plain:true}))
+   }
+    
     
     // Render the dashboard with the user's blog posts
     console.log("this is the user posts", posts)
@@ -26,7 +31,39 @@ const dashboardView =  async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+const homeAdmin = async (req, res) => {
+  try {
+    const blogPosts = await db.Post.findAll({
+      include: [{ model: db.User, as: 'author', attributes: ['username'] }],
+      order: [['createdAt', 'DESC']],
+    });
+  console.log("blog post data---------------------------------",blogPosts);
+    // Render the homepage with blog post data
+    res.render('home', { layout: "dashboard", blogPosts });
+  } catch (error) {
+    console.error('Error fetching user blog posts:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+const renderfullPost = async (req, res) => {
+  try { 
+    const postData = await db.Post.findByPk(req.params.id)
+    if (postData){
+
+      const post = postData.get({plain :true})
+      res.render("update-post", {layout: "dashboard", post })
+    }
+    
+  } catch (error) {
+    console.error('Error fetching user blog posts:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+  
+}
+
 
 module.exports = {
-  dashboardView
+  dashboardView,
+  homeAdmin,
+  renderfullPost
 }
