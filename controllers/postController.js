@@ -51,18 +51,25 @@ const renderUpdatePost = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
+  console.log(req.user)
   try {
-    const { title, content } = req.body;
-    await db.Post.update(
-      { title, content },
-      { where: { id: req.params.id, UserId: req.user.id } }
-    );
-    res.redirect('/dashboard');
+     const { title, content } = req.body;
+     if (!req.user) {
+       return res.status(401).json({ message: 'Unauthorized' });
+     }
+     const updatedPost = await db.Post.update(
+       { title, content },
+       { where: { id: req.params.id, UserId: req.user.id } }
+     );
+     if (!updatedPost) {
+       return res.status(404).json({ message: 'No post found with this id!' });
+     }
+     res.json(updatedPost);
   } catch (error) {
-    console.error('Error updating blog post:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+     console.error('Error updating post:', error);
+     res.status(500).json({ error: 'Internal Server Error' });
   }
-};
+ };
 
 const renderDeletePost = async (req, res) => {
   try {
@@ -137,12 +144,15 @@ const onePost= async (req, res) => {
   }
 }
 
+
+
 module.exports = {
   renderSinglePost,
   renderNewPost,
   createPost,
   allPosts,
   onePost,
+  updatePost
   // renderUpdatePost,
   // updatePost,
   // renderDeletePost,
