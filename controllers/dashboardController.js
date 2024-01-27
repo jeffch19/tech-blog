@@ -59,11 +59,29 @@ const renderfullPost = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
   
-}
+};
 
+//new stuff
+const updatePost = async (req, res) => {
+  try {
+     const { title, content } = req.body;
+     const updatedPost = await db.Post.update(
+       { title, content },
+       { where: { id: req.params.id } }
+     );
+     if (!updatedPost) {
+       return res.status(404).json({ message: 'No post found with this id!' });
+     }
+     res.json(updatedPost);
+  } catch (error) {
+     console.error('Error updating post:', error);
+     res.status(500).json({ error: 'Internal Server Error' });
+  }
+ };
 
 module.exports = {
   dashboardView,
   homeAdmin,
-  renderfullPost
+  renderfullPost,
+  updatePost
 }
