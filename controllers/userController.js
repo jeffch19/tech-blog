@@ -77,7 +77,7 @@ const handleSignIn = async (req, res) => {
   } catch (error) {
     console.error("Error during login:", error);
     // Render the error page or provide a flash message to the user
-    res.status(500).render("error", { error: "Internal Server Error" });
+    res.status(500).json(err.message)
   }
 };
 
