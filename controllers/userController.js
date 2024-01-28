@@ -47,7 +47,7 @@ const handleSignIn = async (req, res) => {
     const user = await db.User.findOne({ where: { username: req.body.username } });
     if (user) {
       // Compare the entered password with the hashed password stored in the database
-      const isPasswordMatch = user.matchPassword(password)
+      const isPasswordMatch = user.matchPassword(req.body.password)
       console.log(isPasswordMatch);
       if (isPasswordMatch) {
         // Successfully logged in, set user information in the session (optional)
