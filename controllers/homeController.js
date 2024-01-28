@@ -42,7 +42,7 @@ const renderSignIn = (req, res) => {
   res.render('signin');
 };
 const renderSignUp = (req, res) => {
-  res.render("signUp")
+  res.render("signup")
 }
 
 module.exports = {
