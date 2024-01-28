@@ -12,7 +12,7 @@ What are the steps required to install your project? Provide a step-by-step desc
 
 ## Usage
 
-Heroku Link: https://git.heroku.com/tech-blog19.git 
+Heroku Link: https://tech-blog19-1aac5338cb31.herokuapp.com/
 
 ![alt text](./blogimg.jpeg)
 
