@@ -31,7 +31,7 @@ app.use(session(sessi));
 const hbs = exphbs.create({ helpers }); // Specify default layout
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-
+app.set('views', path.join(__dirname, 'views'));
 // Initialize bcrypt
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -75,7 +75,7 @@ app.use(express.static(path.join(__dirname,"public")))
 // Include routes
 // app.use(routes);
 // app.use('/user', userRoutes);
-app.use(require('./routes/'))
+app.use(require('./routes/index'))
 
 // Start server
 const PORT = process.env.PORT || 3000;
