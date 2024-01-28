@@ -44,7 +44,7 @@ const handleSignIn = async (req, res) => {
   try {
     const { username, password } = req.body;
     // Find the user by username
-    const user = await db.User.findOne({ where: { username } });
+    const user = await db.User.findOne({ where: { username: req.body.username } });
     if (user) {
       // Compare the entered password with the hashed password stored in the database
       const isPasswordMatch = user.matchPassword(password)
